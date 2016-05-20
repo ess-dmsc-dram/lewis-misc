@@ -21,12 +21,15 @@ RUN PROFILE_SCRIPT=/etc/profile.d/epics.sh \
     && echo "export EPICS_CA_ADDR_LIST=localhost" >> $PROFILE_SCRIPT \
     && echo "export EPICS_CA_AUTO_ADDR_LIST=NO" >> $PROFILE_SCRIPT \
     && echo "export EPICS_CAS_INTF_ADDR_LIST=\"localhost \$ETH0_IP\"" >> $PROFILE_SCRIPT \
-    && echo "export PATH=/EPICS/base/bin/linux-x86_64:\${PATH}" >> $PROFILE_SCRIPT 
+    && echo "export PATH=/EPICS/base/bin/linux-x86_64:\${PATH}" >> $PROFILE_SCRIPT
+
+# Force all interactive (not just login) shells to load profile
+ENV ENV=/etc/profile
 
 # Build and cleanup
 RUN apk --no-cache add --virtual build-dependencies g++ make perl-dev readline-dev \
     && cd /EPICS/base \
-    && make CFLAGS="-DIPPORT_USERRESERVED=5000 -fPIC" CXXFLAGS="-DIPPORT_USERRESERVED=5000 -fPIC" \
+    && make -j4 CFLAGS="-DIPPORT_USERRESERVED=5000 -fPIC" CXXFLAGS="-DIPPORT_USERRESERVED=5000 -fPIC" \
     && make clean \
     && apk del build-dependencies
 
