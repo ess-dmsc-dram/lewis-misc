@@ -12,7 +12,7 @@ RUN apk --no-cache add --virtual build-dependencies g++ readline-dev git swig py
     && . /etc/profile \
     && git clone https://github.com/paulscherrerinstitute/pcaspy.git \
     && cd /pcaspy \
-    && git checkout 5d0f3f19df90ba585f8206f3a635e342158d092c \
+    && git checkout f74a052c158688d8528a2620ce196d09f5355078 \
     && python setup.py install \
     && cd / \
     && rm -rf /pcaspy \
