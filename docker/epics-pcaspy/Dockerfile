@@ -8,7 +8,7 @@ RUN apk --no-cache add \
     readline
 
 # Build latest pcaspy and cleanup
-RUN apk --no-cache add --virtual build-dependencies g++ readline-dev git swig python-dev \
+RUN apk --no-cache add --virtual .build-deps g++ readline-dev git swig python-dev \
     && . /etc/profile \
     && git clone https://github.com/paulscherrerinstitute/pcaspy.git \
     && cd /pcaspy \
@@ -16,5 +16,5 @@ RUN apk --no-cache add --virtual build-dependencies g++ readline-dev git swig py
     && python setup.py install \
     && cd / \
     && rm -rf /pcaspy \
-    && apk del build-dependencies
+    && apk del --purge .build-deps
 

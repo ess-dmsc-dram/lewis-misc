@@ -13,23 +13,30 @@ RUN mkdir /EPICS \
     && mv base-*/ base/ \
     && rm EPICS.tar.gz
 
-# Environment setup
-RUN PROFILE_SCRIPT=/etc/profile.d/epics.sh \
-    && echo "ETH0_IP=\`ifconfig eth0 | awk '/inet addr/{print substr(\$2,6)}'\`" > $PROFILE_SCRIPT \
-    && echo "export EPICS_HOST_ARCH=linux-x86_64" >> $PROFILE_SCRIPT \
-    && echo "export EPICS_BASE=/EPICS/base" >> $PROFILE_SCRIPT \
-    && echo "export EPICS_CA_ADDR_LIST=localhost" >> $PROFILE_SCRIPT \
-    && echo "export EPICS_CA_AUTO_ADDR_LIST=NO" >> $PROFILE_SCRIPT \
-    && echo "export EPICS_CAS_INTF_ADDR_LIST=\"localhost \$ETH0_IP\"" >> $PROFILE_SCRIPT \
-    && echo "export PATH=/EPICS/base/bin/linux-x86_64:\${PATH}" >> $PROFILE_SCRIPT
-
-# Force all interactive (not just login) shells to load profile
-ENV ENV=/etc/profile
-
-# Build and cleanup
-RUN apk --no-cache add --virtual build-dependencies g++ make perl-dev readline-dev \
+# Build and cleanup (EPICS + tini)
+RUN apk --no-cache add --virtual .build-deps cmake bash git g++ make perl-dev readline-dev \
+\
     && cd /EPICS/base \
     && make -j4 CFLAGS="-DIPPORT_USERRESERVED=5000 -fPIC" CXXFLAGS="-DIPPORT_USERRESERVED=5000 -fPIC" \
     && make clean \
-    && apk del build-dependencies
+\
+    && cd / \
+    && git clone https://github.com/krallin/tini \
+    && cd /tini \
+    && cmake . \
+    && make \
+    && mv tini-static /init \
+    && rm -rf /tini \
+\
+    && apk del --purge .build-deps
+
+# Environment setup
+COPY epics.sh /etc/profile.d/epics.sh
+COPY init.sh /init.sh
+
+# Force all interactive shells to load profile (this is only for "--entrypoint sh" overrides)
+ENV ENV=/etc/profile
+
+# Entering via init.sh ensures environment is sourced and passed in command executed via /init
+ENTRYPOINT ["/init.sh"]
 
