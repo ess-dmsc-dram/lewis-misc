@@ -59,10 +59,10 @@ class EssChopper(EpicsDevice, Readable):
     }
 
     internal_chopper_fields = {
-        'speed_setpoint': 'SPEED:SP',
-        'phase_setpoint': 'PHASE:SP',
-        'parkposition_setpoint': 'PARKPOSITION:SP',
-        'command': 'COMMAND',
+        'speed_setpoint': 'Spd',
+        'phase_setpoint': 'Phs',
+        'parkposition_setpoint': 'ParkAng',
+        'command': 'CmdS',
     }
 
     def _get_pv_parameters(self):
@@ -73,10 +73,10 @@ class EssChopper(EpicsDevice, Readable):
 
     def doInit(self, mode):
         if mode != SIMULATION:
-            self._attached_speed.setPVName(self.pvprefix + 'SPEED')
-            self._attached_phase.setPVName(self.pvprefix + 'PHASE')
-            self._attached_state.setPVName(self.pvprefix + 'STATE')
-            self._attached_parkposition.setPVName(self.pvprefix + 'PARKPOSITION')
+            self._attached_speed.setPVName(self.pvprefix + 'Spd-RB')
+            self._attached_phase.setPVName(self.pvprefix + 'Phs-RB')
+            self._attached_state.setPVName(self.pvprefix + 'State')
+            self._attached_parkposition.setPVName(self.pvprefix + 'ParkAng-RB')
 
     def doRead(self, maxage=0):
         return round(self._attached_speed.read(maxage), 2), round(self._attached_phase.read(maxage), 2)
@@ -86,27 +86,27 @@ class EssChopper(EpicsDevice, Readable):
 
     @usermethod
     def interlock(self):
-        self._put_pv('command', 'INTERLOCK')
+        self._put_pv('command', 'init')
 
     @usermethod
     def setSpeedAndPhase(self, speed, phase):
         self._put_pv('speed_setpoint', speed)
         self._put_pv('phase_setpoint', phase)
-        self._put_pv('command', 'START')
+        self._put_pv('command', 'start')
 
     @usermethod
     def stop(self):
-        self._put_pv('command', 'STOP')
+        self._put_pv('command', 'stop')
 
     @usermethod
     def parkAt(self, position):
         self._put_pv('parkposition_setpoint', position)
-        self._put_pv('command', 'PARK')
+        self._put_pv('command', 'park')
 
     @usermethod
     def coast(self):
-        self._put_pv('command', 'COAST')
+        self._put_pv('command', 'unlock')
 
     @usermethod
     def release(self):
-        self._put_pv('command', 'RELEASE')
+        self._put_pv('command', 'deinit')

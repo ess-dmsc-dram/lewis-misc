@@ -88,7 +88,7 @@ $(pv_value)</tooltip>
       <border_width>1</border_width>
       <value_label_format></value_label_format>
       <visible>true</visible>
-      <pv_name>SIM:SPEED</pv_name>
+      <pv_name>SIM:Spd-RB</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -169,7 +169,7 @@ $(pv_value)</tooltip>
       <value_label_format></value_label_format>
       <visible>true</visible>
       <show_value_label>true</show_value_label>
-      <pv_name>SIM:SPEED:SP</pv_name>
+      <pv_name>SIM:Spd</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -294,7 +294,7 @@ $(pv_value)</tooltip>
       <border_width>1</border_width>
       <value_label_format></value_label_format>
       <visible>true</visible>
-      <pv_name>SIM:PHASE</pv_name>
+      <pv_name>SIM:Phs-RB</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -375,7 +375,7 @@ $(pv_value)</tooltip>
       <value_label_format></value_label_format>
       <visible>true</visible>
       <show_value_label>true</show_value_label>
-      <pv_name>SIM:PHASE:SP</pv_name>
+      <pv_name>SIM:Phs</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -496,7 +496,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pvStr0!=&quot;init&quot;">
             <value>0</value>
           </exp>
-          <pv trig="true">SIM:STATE</pv>
+          <pv trig="true">SIM:State</pv>
         </rule>
       </rules>
       <effect_3d>true</effect_3d>
@@ -601,7 +601,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pvStr0!=&quot;stopped&quot;">
             <value>0</value>
           </exp>
-          <pv trig="true">SIM:STATE</pv>
+          <pv trig="true">SIM:State</pv>
         </rule>
       </rules>
       <effect_3d>true</effect_3d>
@@ -706,7 +706,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pvStr0!=&quot;parking&quot;">
             <value>0</value>
           </exp>
-          <pv trig="true">SIM:STATE</pv>
+          <pv trig="true">SIM:State</pv>
         </rule>
       </rules>
       <effect_3d>true</effect_3d>
@@ -811,7 +811,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pvStr0!=&quot;parked&quot;">
             <value>0</value>
           </exp>
-          <pv trig="true">SIM:STATE</pv>
+          <pv trig="true">SIM:State</pv>
         </rule>
       </rules>
       <effect_3d>true</effect_3d>
@@ -916,7 +916,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pvStr0!=&quot;stopping&quot;">
             <value>0</value>
           </exp>
-          <pv trig="true">SIM:STATE</pv>
+          <pv trig="true">SIM:State</pv>
         </rule>
       </rules>
       <effect_3d>true</effect_3d>
@@ -1021,7 +1021,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pvStr0!=&quot;accelerating&quot;">
             <value>0</value>
           </exp>
-          <pv trig="true">SIM:STATE</pv>
+          <pv trig="true">SIM:State</pv>
         </rule>
       </rules>
       <effect_3d>true</effect_3d>
@@ -1126,7 +1126,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pvStr0!=&quot;phase_locking&quot;">
             <value>0</value>
           </exp>
-          <pv trig="true">SIM:STATE</pv>
+          <pv trig="true">SIM:State</pv>
         </rule>
       </rules>
       <effect_3d>true</effect_3d>
@@ -1231,7 +1231,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pvStr0!=&quot;phase_locked&quot;">
             <value>0</value>
           </exp>
-          <pv trig="true">SIM:STATE</pv>
+          <pv trig="true">SIM:State</pv>
         </rule>
       </rules>
       <effect_3d>true</effect_3d>
@@ -1336,7 +1336,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pvStr0!=&quot;idle&quot;">
             <value>0</value>
           </exp>
-          <pv trig="true">SIM:STATE</pv>
+          <pv trig="true">SIM:State</pv>
         </rule>
       </rules>
       <effect_3d>true</effect_3d>
@@ -1494,7 +1494,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name>SIM:COMMAND</pv_name>
+      <pv_name>SIM:CmdS</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -1548,7 +1548,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name>SIM:COMMAND</pv_name>
+      <pv_name>SIM:CmdS</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -1602,7 +1602,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name>SIM:COMMAND</pv_name>
+      <pv_name>SIM:CmdS</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -1656,7 +1656,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name>SIM:COMMAND</pv_name>
+      <pv_name>SIM:CmdS</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -1710,7 +1710,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name>SIM:COMMAND</pv_name>
+      <pv_name>SIM:CmdS</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -1764,7 +1764,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <image></image>
       <visible>true</visible>
-      <pv_name>SIM:COMMAND</pv_name>
+      <pv_name>SIM:CmdS</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -1851,7 +1851,7 @@ $(pv_value)</tooltip>
       <border_width>1</border_width>
       <value_label_format></value_label_format>
       <visible>true</visible>
-      <pv_name>SIM:PARKPOSITION</pv_name>
+      <pv_name>SIM:ParkAng-RB</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
@@ -1932,7 +1932,7 @@ $(pv_value)</tooltip>
       <value_label_format></value_label_format>
       <visible>true</visible>
       <show_value_label>true</show_value_label>
-      <pv_name>SIM:PARKPOSITION:SP</pv_name>
+      <pv_name>SIM:ParkAng</pv_name>
       <border_color>
         <color red="0" green="128" blue="255" />
       </border_color>
