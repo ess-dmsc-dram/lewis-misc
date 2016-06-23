@@ -31,7 +31,7 @@ RUN apk --no-cache add --virtual .build-deps cmake bash git g++ make perl-dev re
     && apk del --purge .build-deps
 
 # Environment setup
-COPY epics.sh /etc/profile.d/epics.sh
+COPY 01-epics-base.sh /etc/profile.d/01-epics-base.sh
 COPY init.sh /init.sh
 
 # Force all interactive shells to load profile (this is only for "--entrypoint sh" overrides)
