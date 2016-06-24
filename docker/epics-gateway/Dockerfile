@@ -26,6 +26,9 @@ RUN apk --no-cache add --virtual .build-deps g++ make perl readline-dev pcre-dev
     && make clean \
     && apk del --purge .build-deps
 
-# Environment setup
-COPY 10-epics-gateway.sh /etc/profile.d/10-epics-gateway.sh
+# Copy additional files to image filesystem
+COPY copyroot/ /
+
+# Use gateway as Entrypoint
+ENTRYPOINT ["/init.sh", "gateway", "-access", "/gateway/GATEWAY.access", "-command", "/gateway/GATEWAY.command", "-pvlist", "/gateway/GATEWAY.pvlist"]
 
