@@ -8,9 +8,10 @@ The purpose of this image is primarily to be used as a base for other images to 
 
 This image itself is based on [Alpine](https://hub.docker.com/_/alpine/), to minimize image size and overhead.
 
-Availability:
+Resources:
 - [GitHub](https://github.com/DMSC-Instrument-Data/plankton-misc/tree/master/docker/epics-base)
 - [DockerHub](https://hub.docker.com/r/dmscid/epics-base/)
+- [Dockerfile](https://github.com/DMSC-Instrument-Data/plankton-misc/blob/master/docker/epics-base/Dockerfile)
 
 
 ## Image Layout and Contents
