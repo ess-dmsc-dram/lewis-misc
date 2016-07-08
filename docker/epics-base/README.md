@@ -9,8 +9,8 @@ The purpose of this image is primarily to be used as a base for other images to 
 This image itself is based on [Alpine](https://hub.docker.com/_/alpine/), to minimize image size and overhead.
 
 Availability:
-- GitHub: https://github.com/DMSC-Instrument-Data/plankton-misc/tree/master/docker/epics-base
-- DockerHub: https://hub.docker.com/r/dmscid/epics-base/
+- [GitHub](https://github.com/DMSC-Instrument-Data/plankton-misc/tree/master/docker/epics-base)
+- [DockerHub](https://hub.docker.com/r/dmscid/epics-base/)
 
 
 ## Image Layout and Contents
@@ -47,10 +47,10 @@ This will do the following:
 - `/etc/profile` is `source`d to set up the environment (which in turn `source`s `/etc/profile.d/*.sh`)
 - `[command]` is run with `[arguments]`, via tini (`/init -s -g`)
 - If no command was provided, `/bin/sh` is used as a default
-- Assuming the script is run as the `ENTRYPOINT` or `CMD`, tini will have PID 1 so that it will receive any signals the container receives from the host
+- Assuming the script is run as the `ENTRYPOINT` or `CMD`, or by a shell that is PID 1, tini will have PID 1 so that it will receive any signals the container receives from the host
 - tini will reap child processes so they don't turn into zombies and forward any signals it receives to all child processes
 
-The init script (or any `ENTRYPOINT`) may be circumvented using the `--entrypoint` argument of `docker run`. When running a container like that, you can switch to "init-mode" by sourcing `init.sh`:
+The init script (or any `ENTRYPOINT`) may be circumvented using the `--entrypoint` argument of `docker run`. When running a container like that, you can switch to "init mode" by sourcing `init.sh`:
 ```sh
 $ docker run -it --entrypoint sh dmscid/epics-base
 / # ps aux
