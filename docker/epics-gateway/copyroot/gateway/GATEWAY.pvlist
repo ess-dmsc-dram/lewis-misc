@@ -1,0 +1,6 @@
+# Default pvlist file to allow all traffic
+# See /EPICS/extensions/src/gateway/GATEWAY.pvlist for more detailed example
+
+EVALUATION ORDER ALLOW, DENY
+
+.* ALLOW
