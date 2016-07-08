@@ -33,9 +33,6 @@ RUN apk --no-cache add --virtual .build-deps cmake bash git g++ make perl-dev re
 # Copy additional files to image filesystem
 COPY copyroot/ /
 
-# Force all interactive shells to load profile (this is only for "--entrypoint sh" overrides)
-ENV ENV=/etc/profile
-
 # Entering via init.sh ensures environment is sourced and passed in command executed via /init
 ENTRYPOINT ["/init.sh"]
 
