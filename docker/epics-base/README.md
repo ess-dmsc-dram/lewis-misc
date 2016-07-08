@@ -1,28 +1,22 @@
-# EPICS base image
+# EPICS Base Image
 
 EPICS is the [Experimental Physics and Industrial Control System](http://www.aps.anl.gov/epics/).
 
-This image contains "EPICS base", the core EPICS software. 
+This image contains build and source of "EPICS base" version R3.14.12.5, the core EPICS software.
 
 The purpose of this image is primarily to be used as a base for other images to build upon.
 
 This image itself is based on [Alpine](https://hub.docker.com/_/alpine/), to minimize image size and overhead.
 
+GitHub: https://github.com/DMSC-Instrument-Data/plankton-misc/tree/master/docker/epics-base
+DockerHub: https://hub.docker.com/r/dmscid/epics-base/
 
-## Image layout and contents
 
-`/EPICS/base` contains both a build and the source of EPICS base.
+## Image Layout and Contents
 
-`/etc/profile.d/01-epics-base.sh` sets up the environment as follows:
-```sh
-EPICS_HOST_ARCH="linux-x86_64"
-EPICS_BASE="/EPICS/base"
-EPICS_CA_ADDR_LIST="127.0.0.1"
-EPICS_CA_AUTO_ADDR_LIST="NO"
-EPICS_CAS_INTF_ADDR_LIST="${ETHERNET_IPS}"
+`/EPICS/base/` contains both a build and the source of EPICS base.
 
-PATH="${EPICS_BASE}/bin/${EPICS_HOST_ARCH}:${PATH}"
-```
+[`/etc/profile.d/01-epics-base.sh`](https://github.com/DMSC-Instrument-Data/plankton-misc/blob/master/docker/epics-base/copyroot/etc/profile.d/01-epics-base.sh) sets up the environment for serving EPICS CA and adds the EPICS bin folder to the `$PATH`.
 
 `/init` and `/init.sh` provide a minimalistic init system, which is described in the next section.
 
@@ -33,9 +27,9 @@ Docker containers lack an init or supervisor system by default. This leads to is
 
 Additionally, since...
 
-1) The `ENV` directive in Dockerfiles does not currently support variable values
-2) `/etc/profile` and `~/.profile` will not be sourced unless you explictly start a login shell
-3) `/etc/bash.bashrc` and `~/.bashrc` will not be sourced unless you run `bash` in interactive but not login mode
+1. The `ENV` directive in Dockerfiles does not currently support variable values
+2. `/etc/profile` and `~/.profile` will not be sourced unless you explictly start a login shell
+3. `/etc/bash.bashrc` and `~/.bashrc` will not be sourced unless you run `bash` in interactive but not login mode
 
 ... it can be quite difficult to reliably ensure environment variables are correctly set up with values that must be determined at runtime (such as a variable IP or hostname).
 
