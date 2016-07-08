@@ -91,3 +91,5 @@ ENTRYPOINT ["/init.sh", "python"]
 
 This will create an image that drops straight into a python shell, with the environment already set up by sourcing `/etc/profile`, `/etc/profile.d/01-epics-base.sh` and `/etc/profile.d/10-setup-environment.sh` in that order.
 
+For a real-world example, see [dmscid/epics-gateway](https://hub.docker.com/r/dmscid/epics-gateway/).
+
