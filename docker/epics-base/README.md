@@ -4,7 +4,7 @@ EPICS is the [Experimental Physics and Industrial Control System](http://www.aps
 
 This image contains build and source of "EPICS base" version R3.14.12.5, the core EPICS software.
 
-The purpose of this image is primarily to be used as a base for other images to build upon.
+The purpose of this image is to provide a bare-bones, minimalistic EPICS base for other images to build upon.
 
 This image itself is based on [Alpine](https://hub.docker.com/_/alpine/), to minimize image size and overhead.
 
