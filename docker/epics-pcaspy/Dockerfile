@@ -10,7 +10,7 @@ RUN apk --no-cache add \
 # Build latest pcaspy and cleanup
 RUN apk --no-cache add --virtual .build-deps g++ readline-dev git swig python-dev \
     && . /etc/profile \
-    && git clone --depth=1 https://github.com/paulscherrerinstitute/pcaspy.git \
+    && git clone https://github.com/paulscherrerinstitute/pcaspy.git \
     && cd /pcaspy \
     && git checkout f74a052c158688d8528a2620ce196d09f5355078 \
     && python setup.py install \
