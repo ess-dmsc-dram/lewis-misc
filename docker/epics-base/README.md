@@ -20,7 +20,7 @@ Resources:
 
 [`/etc/profile.d/01-epics-base.sh`](https://github.com/DMSC-Instrument-Data/plankton-misc/blob/master/docker/epics-base/copyroot/etc/profile.d/01-epics-base.sh) sets up environment variables for serving EPICS CA.
 
-`/init` and `/init.sh` provide a minimalistic init system, which is described in the next section.
+`/tini` and `/init.sh` provide a minimalistic init system, which is described in the next section.
 
 
 ## INIT System
@@ -41,18 +41,18 @@ To resolve these issues, this image provides a combination of [tini](https://git
 
 The script has the following usage:
 ```
-/init.sh [command [arguments]]
+. /init.sh [command [arguments]]
 ```
 
 This will do the following:
 - `/etc/profile` is `source`d to set up the environment (which in turn `source`s `/etc/profile.d/*.sh`)
-- `[command]` is run with `[arguments]`, via tini (`/init -s -g`)
+- `[command]` is run with `[arguments]`, via tini (`/tini -s -g`)
 - If no command was provided, `/bin/sh` is used as a default
 - Assuming the script is run as the `ENTRYPOINT` or `CMD`, or by a shell that is PID 1, tini will have PID 1 so that it will receive any signals the container receives from the host
 - tini will reap child processes so they don't turn into zombies and forward any signals it receives to all child processes
 
 The init script (or any `ENTRYPOINT`) may be circumvented using the `--entrypoint` argument of `docker run`. When running a container like that, you can switch to "init mode" by sourcing `init.sh`:
-```sh
+```
 $ docker run -it --entrypoint sh dmscid/epics-base
 / # ps aux
 PID   USER     TIME   COMMAND
@@ -61,13 +61,13 @@ PID   USER     TIME   COMMAND
 / # . /init.sh
 ac28333e09e1:/# ps aux
 PID   USER     TIME   COMMAND
-    1 root       0:00 /init -s -g /bin/sh
+    1 root       0:00 /tini -s -g -- /bin/sh
    11 root       0:00 /bin/sh
    12 root       0:00 ps aux
 ac28333e09e1:/# exit
 $
 ```
-Note that `/init` has replaced `sh` as the PID 1 process, and you are now in a new shell (which defaulted to `/bin/sh` because no parameters were passed to `/init.sh`). Nevertheless, a single `exit` shuts down the container since the old shell is gone.
+Note that `/tini` has replaced `sh` as the PID 1 process, and you are now in a new shell (which defaulted to `/bin/sh` because no parameters were passed to `/init.sh`). Nevertheless, a single `exit` shuts down the container since the old shell is gone and /tini shuts down when its child process does.
 
 
 ## Usage
@@ -79,7 +79,7 @@ To make use of the above init system, you should keep the provided `ENTRYPOINT` 
 We recommend setting up any required environment variables by providing an `/etc/profile.d/*.sh` script and following the `XY-some-name.sh` naming convention, where `XY` is a two-digit number. Since the scripts are sourced in alphabetical order, that number can be used to control execution order.
 
 Example Dockerfile:
-```
+```dockerfile
 FROM dmscid/epics-base:latest
 
 RUN apk --no-cache add python
