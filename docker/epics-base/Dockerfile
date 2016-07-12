@@ -21,21 +21,18 @@ RUN apk --no-cache add --virtual .build-deps cmake bash git g++ make perl-dev re
     && make clean \
 \
     && cd / \
-    && git clone https://github.com/krallin/tini \
-    && cd /tini \
+    && git clone --depth=1 https://github.com/krallin/tini /tini-src \
+    && cd /tini-src \
     && cmake . \
     && make \
-    && mv tini-static /init \
-    && rm -rf /tini \
+    && mv tini-static /tini \
+    && rm -rf /tini-src \
 \
     && apk del --purge .build-deps
 
 # Copy additional files to image filesystem
 COPY copyroot/ /
 
-# Force all interactive shells to load profile (this is only for "--entrypoint sh" overrides)
-ENV ENV=/etc/profile
-
-# Entering via init.sh ensures environment is sourced and passed in command executed via /init
+# Entering via init.sh ensures environment is sourced and passed in command executed via /tini
 ENTRYPOINT ["/init.sh"]
 
