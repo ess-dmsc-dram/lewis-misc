@@ -40,7 +40,7 @@ General usage:
 $ docker run -it --net=host dmscid/epics-gateway -sip 192.168.99.100 [...]
 ```
 
-This launches a Gateway, optionally passing through any additional gateway parameters provided, that will attempt to listen for CA requests on 192.168.99.100 and forward any it receives by broadcasting to the 172.17.0.0/16 network (by default, if no `-cip` parameter was provided).
+This launches a Gateway -- optionally passing through any additional gateway parameters provided -- that will attempt to listen for CA requests on 192.168.99.100 and forward any it receives by broadcasting to the 172.17.0.0/16 network (by default, if no `-cip` parameter was provided).
 
 To launch a shell in the container instead of Gateway, you can use the `--entrypoint` docker argument. Using `/init.sh` as the entrypoint will ensure the environment is set up correctly (see [dmscid/epics-base](https://hub.docker.com/r/dmscid/epics-base/) for details):
 ```
@@ -57,21 +57,25 @@ This can be very useful for debugging. Exiting this shell will not shut down the
 
 The main motivation for creating this image was to enable talking EPICS CA to docker containers running [plankton](https://hub.docker.com/r/dmscid/plankton/) IOC simulators on Windows and OSX (where they run inside of a Virtual Machine) from the (real, non-VM) host machine.
 
-To make this work, the VM needs to have an adapter that allows the host and the VM to connect to each other. VirtualBox provides host-only and bridged adapters for this purpose (host-only typically recommended, as it avoids exposing the Gateway to any and all networks the host machine is connected to). Once the VM is running, we need to determine the IP of this adapter.
+To make this work, the VM needs to have an adapter that provides an IP the VM can listen on and the host can connect to. VirtualBox provides host-only and bridged adapters for this purpose (host-only typically recommended, as it avoids exposing the Gateway to any and all networks the host machine is connected to).
+
+Once the VM is running, the following steps are required in order to enable CA communication between host and containers in the VM:
+
+1. Determine the IP of the VM on the bridge network
+2. Configure EPICS on the host to send requests to this IP
+3. Run epics-gateway in the VM, passing this IP as its `-sip` parameter
+
+#### Determining IP of the VM
 
 If using DockerMachine, this IP can be found by simply using its `ip` command. E.g.:
 ```
 $ docker-machine ip
 1.2.3.4
-$
 ```
 
 A more general approach would be to run `ifconfig` in a terminal inside the VM, to identify the correct adapter and its IP.
 
-Once you have found it, you can launch epics-gateway and pass in this IP as its Server IP (`-sip`). Here we also tell it to use "gateway" as a prefix for its own PVs:
-```
-$ docker run -it --net=host dmscid/epics-gateway -sip 1.2.3.4 -prefix gateway
-```
+#### Configuring EPICS on Host
 
 To talk to the Gateway and IOCs behind it from the host machine, you must also ensure that EPICS is set up to use this IP when sending requests. E.g.:
 ```
@@ -80,7 +84,16 @@ $ export EPICS_CA_AUTO_ADDR_LIST=NO
 $ export EPICS_CAS_INTF_ADDR_LIST=localhost
 ```
 
-Now you should be able to caget/caput PVs inside the VM from the host machine (note we use the previously set "gateway" prefix here, and also have another container running that is serving PVs with a "SIM" prefix):
+#### Running epics-gateway
+
+When you run epics-gateway, pass it the IP of the VM as its Server IP (`-sip`) and pass docker the `--net=host` parameter to ensure the gateway can see the bridging adapter. Note that docker parameters must be passed after the docker command (`run` in this case) but before the image name. Parameters meant for gateway must be passed after the image name.
+
+Here, we launch a gateway in detached mode, tell it to listen on 1.2.3.4, and also tell it to use "gateway" as a prefix for its own PVs:
+```
+$ docker run -itd --net=host dmscid/epics-gateway -sip 1.2.3.4 -prefix gateway
+```
+
+Now you should be able to caget/caput PVs inside the VM from the host machine. Here, we use the previously set "gateway" prefix here, and also have another container running that is serving PVs with a "SIM" prefix:
 ```
 $ caget gateway:load
 gateway:load                   0
@@ -90,5 +103,5 @@ $ caput gateway:quitFlag 1
 Old : gateway:quitFlag               0
 New : gateway:quitFlag               1
 ```
-Setting the `quitFlag` to 1 will, predictably, shut down the gateway.
+Setting the `quitFlag` to 1 will, predictably, shut down the gateway and its container.
 
