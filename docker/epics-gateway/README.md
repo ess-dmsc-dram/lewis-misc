@@ -93,7 +93,7 @@ Here, we launch a gateway in detached mode, tell it to listen on 1.2.3.4, and al
 $ docker run -itd --net=host dmscid/epics-gateway -sip 1.2.3.4 -prefix gateway
 ```
 
-Now you should be able to caget/caput PVs inside the VM from the host machine. Here, we use the previously set "gateway" prefix here, and also have another container running that is serving PVs with a "SIM" prefix:
+Now you should be able to caget/caput PVs inside the VM from the host machine. Here, we use the previously set "gateway" prefix, and also have another container running that is serving PVs with a "SIM" prefix:
 ```
 $ caget gateway:load
 gateway:load                   0

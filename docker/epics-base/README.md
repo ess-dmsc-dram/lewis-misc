@@ -27,7 +27,7 @@ Location | Contents
 
 This image is intended to be used as a base image. To to extend it, create a new Dockerfile and reference it using the `FROM` directive.
 
-To make use of the provided init system, you should keep the provided `ENTRYPOINT` or use ensure you use `/init.sh` as the first field when defining your own `ENTRYPOINT`.
+To make use of the provided init system, you should keep the provided `ENTRYPOINT` or ensure you use `/init.sh` as the first field when defining your own `ENTRYPOINT`.
 
 We recommend setting up any required environment variables by providing an `/etc/profile.d/*.sh` script and following the `XY-some-name.sh` naming convention, where `XY` is a two-digit number. Since the scripts are sourced in alphabetical order, that number can be used to control execution order.
 
