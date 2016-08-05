@@ -1,44 +1,28 @@
-from nicos.devices.epics import EpicsReadable, pvname, EpicsDevice
-from nicos.core import status, Param, Override, Attach, usermethod, Readable, SIMULATION
+from nicos.devices.epics import EpicsReadable, EpicsMoveable, pvname, EpicsDevice
+from nicos.core import status, Param, Override, Attach, usermethod, HasLimits, Moveable, SIMULATION, Value, tupleof
 
 
-class DelayedEpicsReadable(EpicsDevice, Readable):
-    parameters = {
-        'readpv': Param('PV for reading device value',
-                        type=pvname, mandatory=False),
-    }
-
-    parameter_overrides = {
-        'pollinterval': Override(default=0.5)
-    }
-
-    pv_parameters = set(('readpv',))
-
-    def doPreinit(self, mode):
-        self._pvs = {}
-        self._pvctrls = {}
-
-    def doRead(self, maxage=0):
-        try:
-            return self._get_pv('readpv')
-        except KeyError:
-            raise RuntimeError('test')
-
-    def setPVName(self, name):
-        self._setROParam('readpv', name)
-        self._initialise_pvs()
+class EpicsFloatMoveable(EpicsMoveable):
+    """
+    Handles EPICS devices which can set and read a float value, but without limits.
+    """
+    valuetype = float
 
 
-class EssChopper(EpicsDevice, Readable):
-    parameters = {
-        'pvprefix': Param('PV prefix of the chopper.', type=pvname, mandatory=True)
-    }
+class EpicsStringMoveable(EpicsMoveable):
+    """
+    Handles EPICS devices which can set and read a string value.
+    """
+    valuetype = str
 
+
+class EssChopper(Moveable):
     attached_devices = {
-        'speed': Attach('Speed of the chopper disc', DelayedEpicsReadable),
-        'phase': Attach('Phase of the chopper disc', DelayedEpicsReadable),
-        'parkposition': Attach('Position in parked state', DelayedEpicsReadable),
-        'state': Attach('Current state of the chopper', DelayedEpicsReadable)
+        'speed': Attach('Speed of the chopper disc.', EpicsMoveable),
+        'phase': Attach('Phase of the chopper disc', EpicsMoveable),
+        'parkposition': Attach('Position in parked state', EpicsMoveable),
+        'state': Attach('Current state of the chopper', EpicsReadable),
+        'command': Attach('Command PV of the chopper', EpicsMoveable)
     }
 
     state_map = {
@@ -55,58 +39,43 @@ class EssChopper(EpicsDevice, Readable):
     }
 
     parameter_overrides = {
+        'fmtstr': Override(default='%.2f %.2f'),
         'unit': Override(mandatory=False),
     }
 
-    internal_chopper_fields = {
-        'speed_setpoint': 'Spd',
-        'phase_setpoint': 'Phs',
-        'parkposition_setpoint': 'ParkAng',
-        'command': 'CmdS',
-    }
-
-    def _get_pv_parameters(self):
-        return self.internal_chopper_fields.keys()
-
-    def _get_pv_name(self, pvparam):
-        return self.pvprefix + self.internal_chopper_fields[pvparam]
-
-    def doInit(self, mode):
-        if mode != SIMULATION:
-            self._attached_speed.setPVName(self.pvprefix + 'Spd-RB')
-            self._attached_phase.setPVName(self.pvprefix + 'Phs-RB')
-            self._attached_state.setPVName(self.pvprefix + 'State')
-            self._attached_parkposition.setPVName(self.pvprefix + 'ParkAng-RB')
+    hardware_access = False
+    valuetype = tupleof(float, float)
 
     def doRead(self, maxage=0):
-        return round(self._attached_speed.read(maxage), 2), round(self._attached_phase.read(maxage), 2)
+        return [self._attached_speed.read(maxage), self._attached_phase.read(maxage)]
+
+    def doStart(self, pos):
+        self._attached_speed.move(pos[0])
+        self._attached_phase.move(pos[1])
+        self._attached_command.move('start')
+
+    def doStop(self):
+        self._attached_command.move('stop')
+
+    # def doReadAbslimits(self):
+    #    return [(0.0, 40.0), (0.0, 360.0)]
 
     def doStatus(self, maxage=0):
         return self.state_map[self._attached_state.read()]
 
     @usermethod
-    def interlock(self):
-        self._put_pv('command', 'init')
+    def initialize(self):
+        self._attached_command.move('init')
 
     @usermethod
-    def setSpeedAndPhase(self, speed, phase):
-        self._put_pv('speed_setpoint', speed)
-        self._put_pv('phase_setpoint', phase)
-        self._put_pv('command', 'start')
-
-    @usermethod
-    def stop(self):
-        self._put_pv('command', 'stop')
+    def deinitialize(self):
+        self._attached_command.move('deinit')
 
     @usermethod
     def parkAt(self, position):
-        self._put_pv('parkposition_setpoint', position)
-        self._put_pv('command', 'park')
+        self._attached_parkposition.move(position)
+        self._attached_command.move('park')
 
     @usermethod
-    def coast(self):
-        self._put_pv('command', 'unlock')
-
-    @usermethod
-    def release(self):
-        self._put_pv('command', 'deinit')
+    def unlock(self):
+        self._attached_command.move('unlock')
