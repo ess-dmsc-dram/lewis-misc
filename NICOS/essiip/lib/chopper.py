@@ -50,6 +50,9 @@ class EssChopper(Moveable):
         return [self._attached_speed.read(maxage), self._attached_phase.read(maxage)]
 
     def doStart(self, pos):
+        if self._attached_state.read() == 'init':
+            self.initialize()
+
         self._attached_speed.move(pos[0])
         self._attached_phase.move(pos[1])
         self._attached_command.move('start')
