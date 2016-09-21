@@ -1,17 +1,21 @@
-# EPICS with PCASpy
+# Plankton Dependencies
+
+The purpose of this image is to serve as a base for [dmscid/plankton](https://hub.docker.com/r/dmscid/epics-base/). It contains all dependencies that require lengthy compilation or heavy build-time dependencies to allow the Plankton image build to be as quick and lightweight as possible.
+
+This image is based on [dmscid/epics-base](https://hub.docker.com/r/dmscid/epics-base/) and additionally provides:
+- Python
+- Pip
+- PCASpy v0.6.0
+- PyZMQ
 
 EPICS is the [Experimental Physics and Industrial Control System](http://www.aps.anl.gov/epics/).
 
 PCASpy provides [Python bindings for the Portable Channel Access Server](https://pcaspy.readthedocs.io/en/latest/).
 
-This image is based on [dmscid/epics-base](https://hub.docker.com/r/dmscid/epics-base/) and additionally provides Python, Pip and PCASpy v0.6.0.
-
-The purpose of this image is primarily to be used as a base for other images to build upon.
-
 Resources:
-- [GitHub](https://github.com/DMSC-Instrument-Data/plankton-misc/tree/master/docker/epics-pcaspy)
-- [DockerHub](https://hub.docker.com/r/dmscid/epics-pcaspy/)
-- [Dockerfile](https://github.com/DMSC-Instrument-Data/plankton-misc/blob/master/docker/epics-pcaspy/Dockerfile)
+- [GitHub](https://github.com/DMSC-Instrument-Data/plankton-misc/tree/master/docker/plankton-depends)
+- [DockerHub](https://hub.docker.com/r/dmscid/plankton-depends/)
+- [Dockerfile](https://github.com/DMSC-Instrument-Data/plankton-misc/blob/master/docker/plankton-depends/Dockerfile)
 
 
 ## Usage
