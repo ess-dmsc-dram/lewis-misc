@@ -7,7 +7,7 @@ RUN apk --no-cache add \
     py-pip \
     readline
 
-# Build install dependencies and cleanup
+# Build dependencies and cleanup
 RUN apk --no-cache add --virtual .build-deps g++ readline-dev git swig python-dev \
     && . /etc/profile \
     && pip install pcaspy \
