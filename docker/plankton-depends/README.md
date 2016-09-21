@@ -1,6 +1,6 @@
 # Plankton Dependencies
 
-The purpose of this image is to serve as a base for [dmscid/plankton](https://hub.docker.com/r/dmscid/epics-base/). It contains all dependencies that require lengthy compilation or heavy build-time dependencies to allow the Plankton image build to be as quick and lightweight as possible.
+The purpose of this image is to serve as a base for [dmscid/plankton](https://hub.docker.com/r/dmscid/plankton/). It contains all dependencies that require lengthy compilation or heavy build-time dependencies to allow the Plankton image build to be as quick and lightweight as possible.
 
 This image is based on [dmscid/epics-base](https://hub.docker.com/r/dmscid/epics-base/) and additionally provides:
 - Python
