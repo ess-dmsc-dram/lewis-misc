@@ -5,7 +5,7 @@ The purpose of this image is to serve as a base for [dmscid/plankton](https://hu
 This image is based on [dmscid/epics-base](https://hub.docker.com/r/dmscid/epics-base/) and additionally provides:
 - Python
 - Pip
-- PCASpy v0.6.0
+- PCASpy
 - PyZMQ
 
 EPICS is the [Experimental Physics and Industrial Control System](http://www.aps.anl.gov/epics/).
