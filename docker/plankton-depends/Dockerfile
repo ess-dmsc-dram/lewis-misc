@@ -6,7 +6,7 @@ RUN apk --no-cache add \
     python \
     py-pip \
     readline \
-    && find \( -name '*.pyc' -o -name '*.pyo*' \) -exec rm -rf '{}' +
+    && find \( -name '*.pyc' -o -name '*.pyo' \) -exec rm -rf '{}' +
 
 # Install dependencies that require building and cleanup
 RUN apk --no-cache add --virtual .build-deps g++ swig readline-dev python-dev \
