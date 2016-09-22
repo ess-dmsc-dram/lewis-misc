@@ -20,7 +20,7 @@ Location | Contents
 -------- | --------
 `/EPICS/base/` | EPICS base source and build
 `/etc/profile.d/01-epics-base.sh` | Sets up environment variables for serving EPICS CA ([link](ttps://github.com/DMSC-Instrument-Data/plankton-misc/blob/master/docker/epics-base/copyroot/etc/profile.d/01-epics-base.sh))
-`/tini` and `/init.sh` | Minimalistic init system, which is described in a section below.
+`/sbin/tini` and `/init.sh` | Minimalistic init system, which is described in a section below.
 
 
 ## Usage
@@ -70,7 +70,7 @@ The script has the following usage:
 
 This will do the following:
 - `/etc/profile` is `source`d to set up the environment (which in turn `source`s `/etc/profile.d/*.sh`)
-- `[command]` is run with `[arguments]`, via tini (`/tini -s -g`)
+- `[command]` is run with `[arguments]`, via tini (`/sbin/tini -s -g`)
 - If no command was provided, `/bin/sh` is used as a default
 - Assuming the script is run as the `ENTRYPOINT` or `CMD`, or by a shell that is PID 1, tini will have PID 1 so that it will receive any signals the container receives from the host
 - tini will reap child processes so they don't turn into zombies and forward any signals it receives to all child processes
@@ -85,11 +85,11 @@ PID   USER     TIME   COMMAND
 / # . /init.sh
 ac28333e09e1:/# ps aux
 PID   USER     TIME   COMMAND
-    1 root       0:00 /tini -s -g -- /bin/sh
+    1 root       0:00 /sbin/tini -s -g -- /bin/sh
    11 root       0:00 /bin/sh
    12 root       0:00 ps aux
 ac28333e09e1:/# exit
 $
 ```
-Note that `/tini` has replaced `sh` as the PID 1 process, and you are now in a new shell (which defaulted to `/bin/sh` because no parameters were passed to `/init.sh`). Nevertheless, a single `exit` shuts down the container since the old shell is gone and /tini shuts down when its child process does.
+Note that `/sbin/tini` has replaced `sh` as the PID 1 process, and you are now in a new shell (which defaulted to `/bin/sh` because no parameters were passed to `/init.sh`). Nevertheless, a single `exit` shuts down the container since the old shell is gone and tini shuts down when its child process does.
 

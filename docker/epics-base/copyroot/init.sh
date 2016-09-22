@@ -16,5 +16,5 @@ else
 fi
 
 # Replace this shell with passed in command and arguments, if available
-exec /tini -s -g -- "${CMD}" "$@"
+exec /sbin/tini -s -g -- "${CMD}" "$@"
 
