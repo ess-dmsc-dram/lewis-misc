@@ -9,9 +9,9 @@ The purpose of this image is to provide a bare-bones, minimalistic EPICS base fo
 This image itself is based on [Alpine](https://hub.docker.com/_/alpine/), to minimize image size and overhead.
 
 Resources:
-- [GitHub](https://github.com/DMSC-Instrument-Data/plankton-misc/tree/master/docker/epics-base)
+- [GitHub](https://github.com/DMSC-Instrument-Data/lewis-misc/tree/master/docker/epics-base)
 - [DockerHub](https://hub.docker.com/r/dmscid/epics-base/)
-- [Dockerfile](https://github.com/DMSC-Instrument-Data/plankton-misc/blob/master/docker/epics-base/Dockerfile)
+- [Dockerfile](https://github.com/DMSC-Instrument-Data/lewis-misc/blob/master/docker/epics-base/Dockerfile)
 
 
 ## Image Layout
@@ -19,7 +19,7 @@ Resources:
 Location | Contents
 -------- | --------
 `/EPICS/base/` | EPICS base source and build
-`/etc/profile.d/01-epics-base.sh` | Sets up environment variables for serving EPICS CA ([link](ttps://github.com/DMSC-Instrument-Data/plankton-misc/blob/master/docker/epics-base/copyroot/etc/profile.d/01-epics-base.sh))
+`/etc/profile.d/01-epics-base.sh` | Sets up environment variables for serving EPICS CA ([link](ttps://github.com/DMSC-Instrument-Data/lewis-misc/blob/master/docker/epics-base/copyroot/etc/profile.d/01-epics-base.sh))
 `/sbin/tini` and `/init.sh` | Minimalistic init system, which is described in a section below.
 
 

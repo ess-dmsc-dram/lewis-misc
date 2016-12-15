@@ -1,6 +1,6 @@
-# Plankton Dependencies
+# Lewis Dependencies
 
-The purpose of this image is to serve as a base for [dmscid/plankton](https://hub.docker.com/r/dmscid/plankton/). It contains all dependencies that require lengthy compilation or heavy build-time dependencies to allow the Plankton image build to be as quick and lightweight as possible.
+The purpose of this image is to serve as a base for [dmscid/lewis](https://hub.docker.com/r/dmscid/lewis/). It contains all dependencies that require lengthy compilation or heavy build-time dependencies to allow the Lewis image build to be as quick and lightweight as possible.
 
 This image is based on [dmscid/epics-base](https://hub.docker.com/r/dmscid/epics-base/) and additionally provides:
 - Python
@@ -13,9 +13,9 @@ EPICS is the [Experimental Physics and Industrial Control System](http://www.aps
 PCASpy provides [Python bindings for the Portable Channel Access Server](https://pcaspy.readthedocs.io/en/latest/).
 
 Resources:
-- [GitHub](https://github.com/DMSC-Instrument-Data/plankton-misc/tree/master/docker/plankton-depends)
-- [DockerHub](https://hub.docker.com/r/dmscid/plankton-depends/)
-- [Dockerfile](https://github.com/DMSC-Instrument-Data/plankton-misc/blob/master/docker/plankton-depends/Dockerfile)
+- [GitHub](https://github.com/DMSC-Instrument-Data/lewis-misc/tree/master/docker/lewis-depends)
+- [DockerHub](https://hub.docker.com/r/dmscid/lewis-depends/)
+- [Dockerfile](https://github.com/DMSC-Instrument-Data/lewis-misc/blob/master/docker/lewis-depends/Dockerfile)
 
 
 ## Usage
@@ -28,5 +28,5 @@ We recommend setting up any required environment variables by providing an `/etc
 
 See [dmscid/epics-base](https://hub.docker.com/r/dmscid/epics-base/) for details.
 
-See [dmscid/plankton](https://hub.docker.com/r/dmscid/plankton/) for a usage example.
+See [dmscid/lewis](https://hub.docker.com/r/dmscid/lewis/) for a usage example.
 
