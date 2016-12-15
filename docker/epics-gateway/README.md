@@ -11,9 +11,9 @@ The purpose of this image is to provide a ready-to-use EPICS gateway that is pre
 Among other things, this is useful for forwarding Channel Access (CA) between the `docker0` network and the host machine when using docker via DockerMachine on Windows and Mac.
 
 Resources:
-- [GitHub](https://github.com/DMSC-Instrument-Data/plankton-misc/tree/master/docker/epics-gateway)
+- [GitHub](https://github.com/DMSC-Instrument-Data/lewis-misc/tree/master/docker/epics-gateway)
 - [DockerHub](https://hub.docker.com/r/dmscid/epics-gateway/)
-- [Dockerfile](https://github.com/DMSC-Instrument-Data/plankton-misc/blob/master/docker/epics-gateway/Dockerfile)
+- [Dockerfile](https://github.com/DMSC-Instrument-Data/lewis-misc/blob/master/docker/epics-gateway/Dockerfile)
 
 
 ## Image Layout
@@ -55,7 +55,7 @@ This can be very useful for debugging. Exiting this shell will not shut down the
 
 ## Routing EPICS CA Between VM and Host
 
-The main motivation for creating this image was to enable talking EPICS CA to docker containers running [plankton](https://hub.docker.com/r/dmscid/plankton/) IOC simulators on Windows and OSX (where they run inside of a Virtual Machine) from the (real, non-VM) host machine.
+The main motivation for creating this image was to enable talking EPICS CA to docker containers running [lewis](https://hub.docker.com/r/dmscid/lewis/) IOC simulators on Windows and OSX (where they run inside of a Virtual Machine) from the (real, non-VM) host machine.
 
 To make this work, the VM needs to have an adapter that provides an IP the VM can listen on and the host can connect to. VirtualBox provides host-only and bridged adapters for this purpose (host-only typically recommended, as it avoids exposing the Gateway to any and all networks the host machine is connected to).
 
