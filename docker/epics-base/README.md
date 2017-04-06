@@ -19,7 +19,7 @@ Resources:
 Location | Contents
 -------- | --------
 `/EPICS/base/` | EPICS base source and build
-`/etc/profile.d/01-epics-base.sh` | Sets up environment variables for serving EPICS CA ([link](ttps://github.com/DMSC-Instrument-Data/lewis-misc/blob/master/docker/epics-base/copyroot/etc/profile.d/01-epics-base.sh))
+`/etc/profile.d/01-epics-base.sh` | Sets up environment variables for serving EPICS CA ([link](https://github.com/DMSC-Instrument-Data/lewis-misc/blob/master/docker/epics-base/copyroot/etc/profile.d/01-epics-base.sh))
 `/sbin/tini` and `/init.sh` | Minimalistic init system, which is described in a section below.
 
 
